@@ -1,4 +1,4 @@
-function mincost(arr
+function mincost(arr){
 	const PriorityQueue = require('priorityqueuejs');
     const pq = new PriorityQueue((a, b) => a - b
     for (const rope of arr) {
