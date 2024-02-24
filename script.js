@@ -1,17 +1,29 @@
 function mincost(arr){
-	const PriorityQueue = require('priorityqueuejs');
-    const pq = new PriorityQueue((a, b) => a - b);
-    for (const rope of arr) {
-        pq.enq(rope);
-    }
+	arr.sort((a, b) => a - b);
+
     let totalCost = 0;
-    while (pq.size() > 1) {
-        const shortest1 = pq.deq();
-        const shortest2 = pq.deq();
-        const cost = shortest1 + shortest2;
-        totalCost += cost;
-        pq.enq(cost);
+
+    // Iterate until there is only one rope left
+    while (arr.length > 1) {
+        // Take the two shortest ropes
+        const shortest1 = arr.shift();
+        const shortest2 = arr.shift();
+
+        // Combine the lengths of the two ropes
+        const combinedLength = shortest1 + shortest2;
+
+        // Add the combined length to the total cost
+        totalCost += combinedLength;
+
+        // Insert the combined rope back into the array
+        // Maintain the sorted order by finding the correct position to insert
+        let insertIndex = 0;
+        while (insertIndex < arr.length && arr[insertIndex] < combinedLength) {
+            insertIndex++;
+        }
+        arr.splice(insertIndex, 0, combinedLength);
     }
+
     return totalCost;
 }
 module.exports=mincost;
